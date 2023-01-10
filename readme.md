@@ -1,3 +1,5 @@
+# ** Currently not working with 6.3 update. **
+
 # XivMitmLatencyMitigator in a Docker container
 
 Please visit official [XivMitmLatencyMitigator](https://github.com/Soreepeong/XivMitmLatencyMitigator) for more information.
@@ -64,8 +66,9 @@ This container is also support running on custom VPN server if you happen to set
 
 | Env | Default | Example | Description |
 |-----|---------|---------|-------------|
-| `LOCAL` | `true` | `true` | Enable routing game traffic on LAN interface. You should set this to false if use on private VPN server. |
-| `VPN` | `false` | `false` | true if you are routing game traffic over VPN. |
+| `LOCAL` | `true` | `true` | Enable routing game traffic on LAN interface. You should set this to `false` if use on private VPN server. |
+| `MITIGATOR` | `true` | `true` | `false` if youonly want route game traffic. |
+| `VPN` | `false` | `false` | `true` if you are routing game traffic over VPN. |
 | `VPN_INTERFACE_1` | \- | `wg0` | Name of VPN interface. You can find it with ip a command. |
 | `VPN_INTERFACE_2` | \- | `zerotier` | Another VPN interface if you have. You can add many interface as you want by adding variable `VPN_INTERFACE_3` and `VPN_INTERFACE_4` and so on. |
 | `VPN_INTERFACE_3` | \- | `tailscale` | Just an example. |
