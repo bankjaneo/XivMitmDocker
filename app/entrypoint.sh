@@ -36,7 +36,13 @@ else
 fi
 
 # Running mitigate.py
-curl https://raw.githubusercontent.com/Soreepeong/XivMitmLatencyMitigator/main/mitigate.py | exec python3 - -u -m &
+if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
+    curl https://raw.githubusercontent.com/Soreepeong/XivMitmLatencyMitigator/main/mitigate.py | exec python3 - -u -m &
+else
+    if [ "$MITIGATOR" = "false" ]; then
+        echo "XivMitmLatencyMitigator is disabled."
+    fi
+fi
 
 # SIGTERM
 cleanup() {
