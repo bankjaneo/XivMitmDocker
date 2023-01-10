@@ -81,6 +81,7 @@ docker run -d \
   --restart=always \
   --net=host \
   --cap-add=NET_ADMIN \
+  -e MITIGATOR=true \
   -e LOCAL=false \
   -e VPN=true \
   -e VPN_INTERFACE_1=wg0 \
@@ -96,6 +97,7 @@ services:
     container_name: xiv-mitm-latency-mitigator
     image: bankja/xivlm:latest
     environment:
+      - MITIGATOR=true # Change to false if only want route game traffic.
       - LOCAL=false # Default to true / false when not use within LAN (VPN only).
       - VPN=true # Change to true if you use on your private VPN server.
       - VPN_INTERFACE_1=wg0 # Find by using "ip a" command.
