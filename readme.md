@@ -1,5 +1,3 @@
-# ** Currently not working with 6.3 update. **
-
 # XivMitmLatencyMitigator in a Docker container
 
 Please visit official [XivMitmLatencyMitigator](https://github.com/Soreepeong/XivMitmLatencyMitigator) for more information.
