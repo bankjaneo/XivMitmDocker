@@ -1,0 +1,47 @@
+[
+   {
+      "C2S_ActionRequest":"0x02a0",
+      "C2S_ActionRequestGroundTargeted":"0x019e",
+      "S2C_ActionEffect01":"0x0100",
+      "S2C_ActionEffect08":"0x0314",
+      "S2C_ActionEffect16":"0x0242",
+      "S2C_ActionEffect24":"0x0103",
+      "S2C_ActionEffect32":"0x0076",
+      "S2C_ActorCast":"0x0155",
+      "S2C_ActorControl":"0x00ff",
+      "S2C_ActorControlSelf":"0x03b7",
+      "Server_IpRange":"109.244.0.0/16, 27.221.0.0/16, 119.97.0.0/16, 162.14.0.0/16",
+      "Server_PortRange":"1-65535",
+      "Name":"game.CN.2022.04.15.0000.0000.json"
+   },
+   {
+      "C2S_ActionRequest": "0x0249",
+      "C2S_ActionRequestGroundTargeted": "0x03dc",
+      "S2C_ActionEffect01": "0x01c9",
+      "S2C_ActionEffect08": "0x024a",
+      "S2C_ActionEffect16": "0x038a",
+      "S2C_ActionEffect24": "0x00c8",
+      "S2C_ActionEffect32": "0x032b",
+      "S2C_ActorCast": "0x029c",
+      "S2C_ActorControl": "0x0179",
+      "S2C_ActorControlSelf": "0x026f",
+      "Server_IpRange": "80.239.145.0/24, 124.150.157.0/24, 153.254.80.0/24, 202.67.52.0/24, 204.2.229.0/24, 210.94.0.0/24",
+      "Server_PortRange": "1025-65535",
+      "Name":"game.JP.2022.12.23.0000.0000.json"
+   },
+   {
+      "C2S_ActionRequest":"0x0334",
+      "C2S_ActionRequestGroundTargeted":"0x0318",
+      "S2C_ActionEffect01":"0x00ec",
+      "S2C_ActionEffect08":"0x0078",
+      "S2C_ActionEffect16":"0x033e",
+      "S2C_ActionEffect24":"0x03a7",
+      "S2C_ActionEffect32":"0x0253",
+      "S2C_ActorCast":"0x0112",
+      "S2C_ActorControl":"0x010f",
+      "S2C_ActorControlSelf":"0x01b8",
+      "Server_IpRange":"183.111.189.0/24",
+      "Server_PortRange":"1025-65535",
+      "Name":"game.KR.2022.12.09.0000.0000.json"
+   }
+]
