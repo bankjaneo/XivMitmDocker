@@ -6,15 +6,27 @@ Please visit official [XivMitmLatencyMitigator](https://github.com/Soreepeong/Xi
 
 This is a Docker container version of XivMitmLatencyMitigator. It aims for easy and super fast deployment on any Linux machine without a need to install required library and iptables config. It also auto start on boot, you don't need to create a custom service by yourself. All of this can be achieve with just 1 command!
 
+-----
+
 ### Requirements
 
-A Linux with Docker Engine installed.
+A Linux with IPv4 forwarding enabled and Docker Engine installed.
+
+#### Enable IPv4 forwarding.
+
+You need to edit `/etc/sysctl.conf` by uncommenting the line (remove # in front of it) that contains `net.ipv4.ip_forward=1` and reboot your Linux or you can run this one-line command.
+
+```
+sudo sed -i "s/#net.ipv4.ip_forward/net.ipv4.ip_forward/" /etc/sysctl.conf && sudo sysctl -p && reboot
+```
+
+#### Docker Engine installation.
 
 If you are new to Docker, you can just copy and run the following command to install both `docker` and `docker-compose`. If command below doesn't work or you want to figure by yourself, you can try visit [here](https://docs.docker.com/engine/install/), [here](https://docs.docker.com/compose/), [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04) and [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04) for more information.
 
-***Be warned! Please stop all VPN service before installing Docker or you might run into the installation error.***
+<ins>***Be warned! Please stop all VPN services before installing Docker or you might run into the installation error.***</ins>
 
-#### Debian/Ubuntu Docker installation.
+##### Debian/Ubuntu Docker installation.
 
 ```
 sudo apt update && \
@@ -26,6 +38,8 @@ sudo apt install docker-ce docker-compose-plugin && \
 echo 'docker compose --compatibility "$@"' | sudo tee -a /usr/local/bin/docker-compose && \
 sudo chmod +x /usr/local/bin/docker-compose
 ```
+
+-----
 
 ### Basic usage
 
@@ -57,6 +71,8 @@ services:
 After created docker-compose.yml file, you need to run command `docker-compose up -d` on the same path of **docker-compose.yml** file to start running it.
 
 Then you have to route game traffic to this virtual machine by following step 10 at <https://github.com/Soreepeong/XivMitmLatencyMitigator>
+
+-----
 
 ### Advance usage
 
@@ -107,6 +123,8 @@ services:
       - NET_ADMIN
     restart: always
 ```
+
+-----
 
 ### FAQ
 
