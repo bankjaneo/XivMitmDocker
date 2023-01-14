@@ -6,6 +6,11 @@ Please visit official [XivMitmLatencyMitigator](https://github.com/Soreepeong/Xi
 
 This is a Docker container version of XivMitmLatencyMitigator. It aims for easy and super fast deployment on any Linux machine without a need to install required library and iptables config. It also auto start on boot, you don't need to create a custom service by yourself. All of this can be achieve with just 1 command!
 
+* [Requirements](https://github.com/bankjaneo/XivMitmDocker#requirements)
+* [Basic usage](https://github.com/bankjaneo/XivMitmDocker#basic-usage)
+* [Advance usage](https://github.com/bankjaneo/XivMitmDocker#advance-usage)
+* [FAQ](https://github.com/bankjaneo/XivMitmDocker#faq)
+
 -----
 
 ### Requirements
