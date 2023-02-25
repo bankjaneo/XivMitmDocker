@@ -35,11 +35,11 @@ If you are new to Docker, you can just copy and run the following command to ins
 
 ```
 sudo apt update && \
-sudo apt install apt-transport-https ca-certificates curl software-properties-common && \
+sudo apt install apt-transport-https ca-certificates curl software-properties-common -y && \
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" && \
 apt-cache policy docker-ce && \
-sudo apt install docker-ce docker-compose-plugin && \
+sudo apt install docker-ce docker-compose-plugin -y && \
 echo 'docker compose --compatibility "$@"' | sudo tee -a /usr/local/bin/docker-compose && \
 sudo chmod +x /usr/local/bin/docker-compose
 ```
