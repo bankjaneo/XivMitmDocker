@@ -19,10 +19,10 @@ A Linux with IPv4 forwarding enabled and Docker Engine installed.
 
 #### Enable IPv4 forwarding.
 
-You need to edit `/etc/sysctl.conf` by uncommenting the line (remove # in front of it) that contains `net.ipv4.ip_forward=1` and `sudo reboot` your Linux or you can run this one-line command.
+You need to edit `/etc/sysctl.conf` by uncommenting the line (remove # in front of it) that contains `net.ipv4.ip_forward=1` and `reboot` your Linux or you can run this one-line command.
 
 ```
-sudo sed -i "s/#net.ipv4.ip_forward/net.ipv4.ip_forward/" /etc/sysctl.conf && sudo sysctl -p && reboot
+sudo sed -i "s/#net.ipv4.ip_forward/net.ipv4.ip_forward/" /etc/sysctl.conf && sudo sysctl -p && sudo reboot
 ```
 
 #### Docker Engine installation.
