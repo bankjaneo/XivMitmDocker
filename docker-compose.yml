@@ -6,6 +6,7 @@ services:
     environment:
       - LOCAL=true # Default to true. Set to false when not use within LAN (E.g. Connect through VPN only).
       - VPN=false # Default to false. Set to true if you use this on private VPN server.
+      - LEGACY=false # Change to true if you want to use iptables-legacy.
       - VPN_INTERFACE_1=wg0 # Find by using "ip a" command.
       # - VPN_INTERFACE_2=wg1
       # - VPN_INTERFACE_3=<Add many VPN interfaces as you want.>
