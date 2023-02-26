@@ -4,6 +4,11 @@ echo "Cleaning up..."
 DEVICE_NAME=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
 LOCAL_IP=$(ip addr show $DEVICE_NAME | grep "inet\b" | awk '{print $2}')
 
+# Check iptables-legacy
+if [ "$LEGACY" = "true" ]; then
+    update-alternatives --set iptables /usr/sbin/iptables-legacy
+fi
+
 # Local Interface
 if [ -z ${LOCAL+x} ] || [ "$LOCAL" = "true" ]; then
     for i in $(ip addr show $DEVICE_NAME | grep "inet\b" | awk '{print $2}'); do
