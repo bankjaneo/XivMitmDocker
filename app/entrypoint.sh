@@ -13,9 +13,7 @@ fi
 # Local Interface
 if [ -z ${LOCAL+x} ] || [ "$LOCAL" = "true" ]; then
     for i in $(ip addr show $DEVICE_NAME | grep "inet\b" | awk '{print $2}'); do
-        while IFS="" read -r SERVER_IP || [ -n "$SERVER_IP" ]; do
-            iptables -t nat -A POSTROUTING -s $i -d $SERVER_IP -o $DEVICE_NAME -j MASQUERADE
-        done < server-list.txt
+        iptables -t nat -A POSTROUTING -s $i -o $DEVICE_NAME -j MASQUERADE
     done
 else
     if [ "$LOCAL" = "false" ]; then
@@ -30,7 +28,7 @@ else
     if [ "$VPN" = "true" ]; then
         for var in "${!VPN_INTERFACE_@}"; do
             VPN_SUBNET=$(ip addr show ${!var} | grep "inet\b" | awk '{print $2}')
-            
+
             while IFS="" read -r SERVER_IP || [ -n "$SERVER_IP" ]; do
                 iptables -t nat -A POSTROUTING -s $VPN_SUBNET -d $SERVER_IP -o $DEVICE_NAME -j MASQUERADE
             done < server-list.txt
