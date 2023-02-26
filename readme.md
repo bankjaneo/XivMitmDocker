@@ -134,6 +134,14 @@ services:
 
 ### FAQ
 
+#### Q: What to do when there is new a FFXIV patch update?
+
+A: You will have to wait for an updated Opcodes (and sometimes [XivMitmLatencyMitigator](https://github.com/Soreepeong/XivMitmLatencyMitigator)). When the update came, just run the following command to restart container and everything will be updated automatically.
+
+  ```
+  docker restart xiv-mitm-latency-mitigator
+  ```
+
 #### Q: What will happen with my iptables rules?
 
 A: This container will automatically created rules in 3 chains, PREROUTING, POSTROUTING and FORWARD.
