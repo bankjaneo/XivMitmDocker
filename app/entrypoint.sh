@@ -5,6 +5,11 @@
 
 DEVICE_NAME=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
 
+# Check iptables-legacy
+if [ "$LEGACY" = "true" ]; then
+    update-alternatives --set iptables /usr/sbin/iptables-legacy
+fi
+
 # Local Interface
 if [ -z ${LOCAL+x} ] || [ "$LOCAL" = "true" ]; then
     for i in $(ip addr show $DEVICE_NAME | grep "inet\b" | awk '{print $2}'); do
@@ -37,8 +42,11 @@ fi
 
 # Running mitigate.py
 if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
-    # curl https://raw.githubusercontent.com/Soreepeong/XivMitmLatencyMitigator/main/mitigate.py | exec python3 - -u -m &
-    curl https://raw.githubusercontent.com/xzn/XivMitmLatencyMitigator/472533cceaf6b7cccb389ddb931163cfde952ee2/mitigate.py | exec python3 - -u -m &
+    curl https://raw.githubusercontent.com/Soreepeong/XivMitmLatencyMitigator/main/mitigate.py -o mitigate.py
+    if [ "$LEGACY" = "true" ]; then
+        sed -i "s/iptables -t/iptables-legacy -t/" mitigate.py
+    fi
+    exec python3 mitigate.py -u -m &
 else
     if [ "$MITIGATOR" = "false" ]; then
         echo "XivMitmLatencyMitigator is disabled."
