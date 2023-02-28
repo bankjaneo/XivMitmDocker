@@ -3,6 +3,7 @@
 # Clean up old iptables rules
 /app/cleanup.sh
 
+SCRIPT_URL="https://raw.githubusercontent.com/Soreepeong/XivMitmLatencyMitigator/main/mitigate.py"
 DEVICE_NAME=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
 
 # Check iptables-legacy
@@ -13,7 +14,9 @@ fi
 # Local Interface
 if [ -z ${LOCAL+x} ] || [ "$LOCAL" = "true" ]; then
     for i in $(ip addr show $DEVICE_NAME | grep "inet\b" | awk '{print $2}'); do
-        iptables -t nat -A POSTROUTING -s $i -o $DEVICE_NAME -j MASQUERADE
+        while IFS="" read -r SERVER_IP || [ -n "$SERVER_IP" ]; do
+            iptables -t nat -A POSTROUTING -s $i -d $SERVER_IP -o $DEVICE_NAME -j MASQUERADE
+        done < server-list.txt
     done
 else
     if [ "$LOCAL" = "false" ]; then
@@ -28,7 +31,7 @@ else
     if [ "$VPN" = "true" ]; then
         for var in "${!VPN_INTERFACE_@}"; do
             VPN_SUBNET=$(ip addr show ${!var} | grep "inet\b" | awk '{print $2}')
-
+            
             while IFS="" read -r SERVER_IP || [ -n "$SERVER_IP" ]; do
                 iptables -t nat -A POSTROUTING -s $VPN_SUBNET -d $SERVER_IP -o $DEVICE_NAME -j MASQUERADE
             done < server-list.txt
@@ -40,7 +43,13 @@ fi
 
 # Running mitigate.py
 if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
-    curl https://raw.githubusercontent.com/Soreepeong/XivMitmLatencyMitigator/main/mitigate.py -o mitigate.py
+    # Check for internet connection before downloading script.
+    while ! curl --connect-timeout 5 -sfL $SCRIPT_URL > /dev/null; do
+        echo "Cannot download script. Retry in 5 seconds."
+        sleep 5
+    done
+
+    curl $SCRIPT_URL -o mitigate.py
     if [ "$LEGACY" = "true" ]; then
         sed -i "s/iptables -t/iptables-legacy -t/" mitigate.py
     fi
