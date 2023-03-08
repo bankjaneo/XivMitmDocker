@@ -86,7 +86,7 @@ This container is also support running on custom VPN server if you happen to set
 | Env | Default | Example | Description |
 |-----|---------|---------|-------------|
 | `LOCAL` | `true` | `true` | Enable routing game traffic on LAN interface. You should set this to `false` if use on private VPN server. |
-| `MITIGATOR` | `true` | `true` | `false` if you only want route game traffic. |
+| `MITIGATOR` | `true` | `true` | `false` if you only want route game traffic. Also useful when new patch breaks the script and need to temporarily disable it or you'll not be able to login to the game. |
 | `VPN` | `false` | `false` | `true` if you are routing game traffic over VPN. |
 | `LEGACY` | `false` | `false` | `true` if you want to use `iptables-legacy` instead of `iptables`. |
 | `VPN_INTERFACE_1` | \- | `wg0` | Name of VPN interface. You can find it with ip a command. |
