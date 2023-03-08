@@ -3,21 +3,35 @@
 SCRIPT_URL="https://raw.githubusercontent.com/Soreepeong/XivMitmLatencyMitigator/main/mitigate.py"
 DEVICE_NAME=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
 
-# Check Internet connection function
-check_internet () {
+> definitions.json
+> server-list.txt
+
+if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
+    # Check connection to XivMitmLatencyMitigator script.
     while ! curl --connect-timeout 5 -sfL $SCRIPT_URL > /dev/null; do
-        echo "No Internet connection. Retry in 5 seconds."
+        echo "Cannot download script, retry in 5 seconds."
         sleep 5
     done
-}
+
+    # Create definitions.json.
+    definition_urls=`curl -s https://api.github.com/repos/Soreepeong/XivAlexander/contents/StaticData/OpcodeDefinition | jq -r '.[] | select(.name|test(".json$")) | .download_url '`
+    for url in $definition_urls; do
+        curl -O -s $url
+    done
+    echo -n "[" >> definitions.json
+    for file in game.*.json; do
+        cat $file | jq --arg file "$file" '. += {"Name": $file}' | tr -d '[:space:]' >> definitions.json
+        echo -n "," >> definitions.json
+    done
+    echo -n "]" >> definitions.json
+    sed -i 's/},]/}]/' definitions.json
+    jq . definitions.json > definitions.tmp
+    mv definitions.tmp definitions.json
+    rm game.*.json
+fi
 
 # Create server IP list.
-check_internet
-definition_urls=`curl -s https://api.github.com/repos/Soreepeong/XivAlexander/contents/StaticData/OpcodeDefinition | jq -r '.[] | select(.name|test(".json$")) | .download_url '`
-> server-list.txt
-for url in $definition_urls; do
-    curl -s $url | jq -r '.Server_IpRange' | sed -e 's/, /\n/g' >> server-list.txt
-done
+cat definitions.json | jq -r '.[] | .Server_IpRange' | sed -e 's/, /\n/g' >> server-list.txt
 if [ ! -s server-list.txt ]; then
     cp backup-server-list.txt server-list.txt
 fi
@@ -61,13 +75,13 @@ fi
 
 # Running mitigate.py
 if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
-    curl $SCRIPT_URL -o mitigate.py
+    curl -s $SCRIPT_URL -o mitigate.py
 
     # Convert iptables to iptables-legacy if set.
     if [ "$LEGACY" = "true" ]; then
         sed -i "s/iptables -t/iptables-legacy -t/" mitigate.py
     fi
-    exec python3 mitigate.py -u -m &
+    exec python3 mitigate.py -m &
 else
     if [ "$MITIGATOR" = "false" ]; then
         echo "XivMitmLatencyMitigator is disabled."
