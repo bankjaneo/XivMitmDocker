@@ -28,6 +28,11 @@ if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
     jq . definitions.json > definitions.tmp
     rm *.json
     mv definitions.tmp definitions.json
+
+    if [ ! -s definitions.json ]; then
+        echo "Could not create definitions.json, maybe hitting Github API limit. Wait about an hour before try again."
+        exit
+    fi
 fi
 
 # Create server IP list.
