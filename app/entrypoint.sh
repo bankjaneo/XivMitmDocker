@@ -26,8 +26,8 @@ if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
     echo -n "]" >> definitions.json
     sed -i 's/},]/}]/' definitions.json
     jq . definitions.json > definitions.tmp
+    rm *.json
     mv definitions.tmp definitions.json
-    rm game.*.json
 fi
 
 # Create server IP list.
