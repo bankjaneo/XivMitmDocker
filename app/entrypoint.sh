@@ -31,7 +31,7 @@ if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
 fi
 
 # Create server IP list.
-cat definitions.json | jq -r '.[] | .Server_IpRange' | sed -e 's/, /\n/g' >> server-list.txt
+cat definitions.json | jq -r '.[] | .Server_IpRange' | sed -e 's/,/\n/g' >> server-list.txt
 if [ ! -s server-list.txt ]; then
     cp backup-server-list.txt server-list.txt
 fi
