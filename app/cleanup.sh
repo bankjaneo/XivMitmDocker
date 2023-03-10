@@ -38,7 +38,7 @@ else
 fi
 
 # Clean up mitigate.py
-rm /app/'<stdin>.cleanup.sh'
+rm /app/*.cleanup.sh
 while IFS="" read -r SERVER_IP || [ -n "$SERVER_IP" ]; do
     iptables -t nat -S PREROUTING | grep $SERVER_IP | cut -d " " -f 2- | xargs -rL1 iptables -t nat -D
 done < server-list.txt
