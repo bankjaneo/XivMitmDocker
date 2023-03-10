@@ -53,7 +53,7 @@ If your gaming PC and Linux virtual machine is on the same LAN, just run this co
 ```shell
 docker run -d \
   --name=xiv-mitm-latency-mitigator \
-  --restart=always \
+  --restart=unless-stopped \
   --net=host \
   --cap-add=NET_ADMIN \
   bankja/xivlm:latest
@@ -70,7 +70,7 @@ services:
     network_mode: host
     cap_add:
       - NET_ADMIN
-    restart: always
+    restart: unless-stopped
 ```
 
 After created docker-compose.yml file, you need to run command `docker-compose up -d` on the same path of **docker-compose.yml** file to start running it.
@@ -98,11 +98,12 @@ Example command when you using this with Wireguard on your private VPN server. A
 ```shell
 docker run -d \
   --name=xiv-mitm-latency-mitigator \
-  --restart=always \
+  --restart=unless-stopped \
   --net=host \
   --cap-add=NET_ADMIN \
   -e MITIGATOR=true \
   -e LOCAL=false \
+  -e LEGACY=false \
   -e VPN=true \
   -e VPN_INTERFACE_1=wg0 \
   bankja/xivlm:latest
@@ -117,17 +118,24 @@ services:
     container_name: xiv-mitm-latency-mitigator
     image: bankja/xivlm:latest
     environment:
-      - MITIGATOR=true # Change to false if only want route game traffic.
-      - LOCAL=false # Default to true / false when not use within LAN (VPN only).
-      - VPN=true # Change to true if you use on your private VPN server.
+      - MITIGATOR=true # Default to true. Set to false when need to disable XivMitmLatencyMitigator script.
+      - LOCAL=true # Default to true. Set to false when not use within LAN (E.g. Connect through VPN only).
+      - LEGACY=false # Default to false. Set to true if you want to use iptables-legacy.
+      - VPN=false # Default to false. Set to true if you use this on private VPN server.
       - VPN_INTERFACE_1=wg0 # Find by using "ip a" command.
       # - VPN_INTERFACE_2=wg1
+      # - VPN_INTERFACE_3=<Add many VPN interfaces as you want.>
     volumes:
       - /etc/localtime:/etc/localtime:ro
     network_mode: host
     cap_add:
       - NET_ADMIN
-    restart: always
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "1"
+        max-size: "10m"
 ```
 
 -----
@@ -152,7 +160,7 @@ A: This container will automatically created rules in 3 chains, PREROUTING, POST
 
 #### Q: How to check my iptables rules?
 
-A: Run this command as root or with sudo to see them.
+A: Run these commands as root or with sudo to see them. However, if you use old version of Linux distro like Ubuntu 20.04, rules may not show up with these commands.
 
 * **PREROUTING** `iptables -t nat -L PREROUTING -n -v`
 * **POSTROUTING** `iptables -t nat -L POSTROUTING -n -v`
