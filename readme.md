@@ -11,6 +11,11 @@ This is a Docker container version of XivMitmLatencyMitigator. It aims for easy 
 * [Advance usage](https://github.com/bankjaneo/XivMitmDocker#advance-usage)
 * [FAQ](https://github.com/bankjaneo/XivMitmDocker#faq)
 
+### Changelog
+
+* Apr 6, 2023 - Support custom definitions.json URL with environment variable `DEFINITIONS_URL`.
+* Mar 10, 2023 - Change ffxiv.exe to ffxiv_dx11.exe to support 6.35
+
 -----
 
 ### Requirements
