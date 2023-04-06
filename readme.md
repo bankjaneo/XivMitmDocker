@@ -176,6 +176,17 @@ A: No, these newly created rules will be automatically removed when you stop (no
 
 A: If you happen to kill the container, all created iptables rules will not get removed. However, if you start the container again, it will cleanup the all previously created rules before creating a new one. Then you can stop it again to remove all rules created by the container.
 
+#### Q: How to update the container image to latest version.
+
+A: Run following commands and it will stop, delete container and image then download the latest version.
+
+  ```
+  sudo docker stop xiv-mitm-latency-mitigator && \
+  sudo docker rm xiv-mitm-latency-mitigator && \
+  sudo docker image rm bankja/xivlm:latest && \
+  sudo docker pull bankja/xivlm:latest
+  ```
+
 #### Q: How to permanently stop this container.
 
 A: There are 2 methods based on how you run this container.
