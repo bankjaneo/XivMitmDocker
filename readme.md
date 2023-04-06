@@ -87,6 +87,7 @@ This container is also support running on custom VPN server if you happen to set
 |-----|---------|---------|-------------|
 | `LOCAL` | `true` | `true` | Enable routing game traffic on LAN interface. You should set this to `false` if use on private VPN server. |
 | `MITIGATOR` | `true` | `true` | `false` if you only want route game traffic. Also useful when new patch breaks the script and need to temporarily disable it or you'll not be able to login to the game. |
+| `DEFINITIONS_URL` | `false` | `https://pastebin.com/raw/jf66WP69` | URL of custom definitions.json for use when official isn't update yet. Make sure that URL is link to raw text file or script will not work. Example is link to 6.38 definitions.json. |
 | `VPN` | `false` | `false` | `true` if you are routing game traffic over VPN. |
 | `LEGACY` | `false` | `false` | `true` if you want to use `iptables-legacy` instead of `iptables`. |
 | `VPN_INTERFACE_1` | \- | `wg0` | Name of VPN interface. You can find it with ip a command. |
@@ -119,6 +120,7 @@ services:
     image: bankja/xivlm:latest
     environment:
       - MITIGATOR=true # Default to true. Set to false when need to disable XivMitmLatencyMitigator script.
+      # - DEFINITIONS_URL=https://pastebin.com/raw/jf66WP69 # URL of 6.38 definitions.json.
       - LOCAL=true # Default to true. Set to false when not use within LAN (E.g. Connect through VPN only).
       - LEGACY=false # Default to false. Set to true if you want to use iptables-legacy.
       - VPN=false # Default to false. Set to true if you use this on private VPN server.
