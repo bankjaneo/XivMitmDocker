@@ -14,24 +14,36 @@ if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
     done
 
     # Create definitions.json.
-    definition_urls=`curl -s https://api.github.com/repos/Soreepeong/XivAlexander/contents/StaticData/OpcodeDefinition | jq -r '.[] | select(.name|test(".json$")) | .download_url '`
-    for url in $definition_urls; do
-        curl -O -s $url
-    done
-    echo -n "[" >> definitions.json
-    for file in game.*.json; do
-        cat $file | jq --arg file "$file" '. += {"Name": $file}' | tr -d '[:space:]' >> definitions.json
-        echo -n "," >> definitions.json
-    done
-    echo -n "]" >> definitions.json
-    sed -i 's/},]/}]/' definitions.json
-    jq . definitions.json > definitions.tmp
-    rm *.json
-    mv definitions.tmp definitions.json
+    if [ -z ${DEFINITIONS_URL+x} ]; then
+        definition_urls=`curl -s https://api.github.com/repos/Soreepeong/XivAlexander/contents/StaticData/OpcodeDefinition | jq -r '.[] | select(.name|test(".json$")) | .download_url '`
+        for url in $definition_urls; do
+            curl -O -s $url
+        done
+        echo -n "[" >> definitions.json
+        for file in game.*.json; do
+            cat $file | jq --arg file "$file" '. += {"Name": $file}' | tr -d '[:space:]' >> definitions.json
+            echo -n "," >> definitions.json
+        done
+        echo -n "]" >> definitions.json
+        sed -i 's/},]/}]/' definitions.json
+        jq . definitions.json > definitions.tmp
+        rm *.json
+        mv definitions.tmp definitions.json
 
-    if [ ! -s definitions.json ]; then
-        echo "Could not create definitions.json, maybe hitting Github API limit. Wait about an hour before try again."
-        exit
+        if [ ! -s definitions.json ]; then
+            echo "Could not create definitions.json, maybe hitting Github API limit. Wait about an hour before try again."
+            exit
+        fi
+    else
+        curl -s $DEFINITIONS_URL -o definitions.json
+        jq . definitions.json > definitions.tmp
+        rm *.json
+        mv definitions.tmp definitions.json
+
+        if [ ! -s definitions.json ]; then
+            echo "Could not download definitions.json. Please check your link and try again."
+            exit
+        fi
     fi
 fi
 
