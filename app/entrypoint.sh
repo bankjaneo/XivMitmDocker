@@ -54,7 +54,7 @@ if [ ! -s server-list.txt ]; then
 fi
 
 # Clean up old iptables rules.
-/app/cleanup.sh
+/app/cleanup.sh > /dev/null 2>&1
 
 # Check if iptables-legacy is set.
 if [ "$LEGACY" = "true" ]; then
