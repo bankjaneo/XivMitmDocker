@@ -16,6 +16,7 @@ This is a Docker container version of XivMitmLatencyMitigator. It aims for easy 
 * Apr 6, 2023 - Support custom definitions.json URL with environment variable `DEFINITIONS_URL`.
 * Mar 10, 2023 - Change ffxiv.exe to ffxiv_dx11.exe to support 6.35.
 * Jun 28, 2023 - Cleanup docker logs and update ffxiv_dx11.exe to 6.41.
+* Jul 21, 2023 - Update ffxiv_dx11.exe to 6.45.
 
 -----
 
