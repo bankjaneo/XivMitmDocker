@@ -17,6 +17,7 @@ This is a Docker container version of XivMitmLatencyMitigator. It aims for easy 
 * Mar 10, 2023 - Change ffxiv.exe to ffxiv_dx11.exe to support 6.35.
 * Jun 28, 2023 - Cleanup docker logs and update ffxiv_dx11.exe to 6.41.
 * Jul 21, 2023 - Update ffxiv_dx11.exe to 6.45.
+* Aug 3, 2023 - Add support for argument --extra-delay, --measure-ping, --nftables and set default --measure-ping to false (prior versions default to true).
 
 -----
 
@@ -95,8 +96,11 @@ This container is also support running on custom VPN server if you happen to set
 | `LOCAL` | `true` | `true` | Enable routing game traffic on LAN interface. You should set this to `false` if use on private VPN server. |
 | `MITIGATOR` | `true` | `true` | `false` if you only want route game traffic. Also useful when new patch breaks the script and need to temporarily disable it or you'll not be able to login to the game. |
 | `DEFINITIONS_URL` | `false` | `https://pastebin.com/raw/jf66WP69` | URL of custom definitions.json for use when official isn't update yet. Make sure that URL is link to raw text file or script will not work. Example is link to 6.38 definitions.json. |
-| `VPN` | `false` | `false` | `true` if you are routing game traffic over VPN. |
 | `LEGACY` | `false` | `false` | `true` if you want to use `iptables-legacy` instead of `iptables`. |
+| `NFTABLES` | `false` | `false` | `true` if you use `nftables`. (Never tested) |
+| `EXTRA_DELAY` | `0.075` | `0.035` | Manually adjust extra delay in milliseconds (ms). If you run on a VPS, reduce this should improve respond time. |
+| `MEASURE_PING` | `false` | `false` | Auto adjust extra delay. Set to `true` may worsen respond time if you use within LAN. However, when you set `VPN` to `true`, this setting will automatically set to `true` unless manually set to `false` |
+| `VPN` | `false` | `false` | `true` if you are routing game traffic over VPN. |
 | `VPN_INTERFACE_1` | \- | `wg0` | Name of VPN interface. You can find it with ip a command. |
 | `VPN_INTERFACE_2` | \- | `zerotier` | Another VPN interface if you have. You can add many interface as you want by adding variable `VPN_INTERFACE_3` and `VPN_INTERFACE_4` and so on. |
 | `VPN_INTERFACE_3` | \- | `tailscale` | Just an example. |
@@ -130,6 +134,9 @@ services:
       # - DEFINITIONS_URL=https://pastebin.com/raw/jf66WP69 # URL of 6.38 definitions.json.
       - LOCAL=true # Default to true. Set to false when not use within LAN (E.g. Connect through VPN only).
       - LEGACY=false # Default to false. Set to true if you want to use iptables-legacy.
+      # - NFTABLES=false # Default to false. Set to true if you use nftables.
+      # - EXTRA_DELAY=0.035 # Default value is 0.075 ms.
+      # - MEASURE_PING=false # Default to false. Set to true may help improve respond time on private VPN server.
       - VPN=false # Default to false. Set to true if you use this on private VPN server.
       - VPN_INTERFACE_1=wg0 # Find by using "ip a" command.
       # - VPN_INTERFACE_2=wg1
