@@ -90,6 +90,29 @@ else
     fi
 fi
 
+# -e (--extra-delay) option
+if [ -z ${EXTRA_DELAY+x} ]; then
+    EXTRA_DELAY_ARG=""
+elif [ $(echo "$EXTRA_DELAY * 1000" | bc | sed 's/\..*//') -ge 1 ]; then
+    EXTRA_DELAY_ARG="-e $EXTRA_DELAY"
+else
+    EXTRA_DELAY_ARG=""
+fi
+
+# -m (--measure-ping) option
+if [ "$MEASURE_PING" = "true" ] || ([ -z ${MEASURE_PING+x} ] && [ "$VPN" = "true" ]); then
+    MEASURE_PING_ARG="-m"
+else
+    MEASURE_PING_ARG=""
+fi
+
+# -n (--nftables) option
+if [ "$NFTABLES" = "true" ]; then
+    NFTABLES_ARG="-n"
+else
+    NFTABLES_ARG=""
+fi
+
 # Running mitigate.py
 if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
     curl -s $SCRIPT_URL -o mitigate.py
@@ -98,7 +121,7 @@ if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
     if [ "$LEGACY" = "true" ]; then
         sed -i "s/iptables -t/iptables-legacy -t/" mitigate.py
     fi
-    exec python3 mitigate.py -m &
+    exec python3 mitigate.py $EXTRA_DELAY_ARG $MEASURE_PING_ARG $NFTABLES_ARG &
 else
     if [ "$MITIGATOR" = "false" ]; then
         echo "XivMitmLatencyMitigator is disabled."
