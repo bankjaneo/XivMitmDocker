@@ -98,7 +98,7 @@ This container is also support running on custom VPN server if you happen to set
 | `DEFINITIONS_URL` | `false` | `https://pastebin.com/raw/jf66WP69` | URL of custom definitions.json for use when official isn't update yet. Make sure that URL is link to raw text file or script will not work. Example is link to 6.38 definitions.json. |
 | `LEGACY` | `false` | `false` | `true` if you want to use `iptables-legacy` instead of `iptables`. |
 | `NFTABLES` | `false` | `false` | `true` if you use `nftables`. (Never tested) |
-| `EXTRA_DELAY` | `0.075` | `0.035` | Manually adjust extra delay in milliseconds (ms). If you run on a VPS, reduce this should improve respond time. |
+| `EXTRA_DELAY` | `0.075` | `0.035` | Manually adjust extra delay in seconds (0.075 = 75ms). If you run on a VPS, reduce this should improve respond time. |
 | `MEASURE_PING` | `false` | `false` | Auto adjust extra delay. Set to `true` may worsen respond time if you use within LAN. However, when you set `VPN` to `true`, this setting will automatically set to `true` unless manually set to `false` |
 | `VPN` | `false` | `false` | `true` if you are routing game traffic over VPN. |
 | `VPN_INTERFACE_1` | \- | `wg0` | Name of VPN interface. You can find it with ip a command. |
