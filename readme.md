@@ -18,6 +18,7 @@ This is a Docker container version of XivMitmLatencyMitigator. It aims for easy 
 * Jun 28, 2023 - Cleanup docker logs and update ffxiv_dx11.exe to 6.41.
 * Jul 21, 2023 - Update ffxiv_dx11.exe to 6.45.
 * Aug 3, 2023 - Add support for argument --extra-delay, --measure-ping, --nftables and set default --measure-ping to false (prior versions default to true).
+* Aug 11, 2023 - Update ffxiv_dx11.exe to 6.48.
 
 -----
 
