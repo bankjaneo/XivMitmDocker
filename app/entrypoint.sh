@@ -20,7 +20,7 @@ if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
             curl -O -s $url
         done
         echo -n "[" >> definitions.json
-        for file in game.*.json; do
+        for file in *game.*.json; do
             cat $file | jq --arg file "$file" '. += {"Name": $file}' | tr -d '[:space:]' >> definitions.json
             echo -n "," >> definitions.json
         done
