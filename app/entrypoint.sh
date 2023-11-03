@@ -35,8 +35,17 @@ if [ -z ${MITIGATOR+x} ] || [ "$MITIGATOR" = "true" ]; then
             exit
         fi
     else
+        echo "Use custom definitions.json from $DEFINITIONS_URL."
         curl -s $DEFINITIONS_URL -o definitions.json
-        jq . definitions.json > definitions.tmp
+        if [ "$(head -c 1 definitions.json)" = "{" ]; then 
+            sed -i '1s/^/[/' definitions.json
+            echo -n "]" >> definitions.json
+        fi
+        if [ "$(jq .[0].Name definitions.json)" = "null" ]; then
+            cat definitions.json | jq 'map(. + {"Name":"Custom"})' > definitions.tmp
+        else
+            jq . definitions.json > definitions.tmp
+        fi
         rm *.json
         mv definitions.tmp definitions.json
 
