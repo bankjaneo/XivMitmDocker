@@ -14,13 +14,10 @@ This is a Docker container version of XivMitmLatencyMitigator. It aims for easy 
 ### Changelog
 
 * Apr 6, 2023 - Support custom definitions.json URL with environment variable `DEFINITIONS_URL`.
-* Mar 10, 2023 - Change ffxiv.exe to ffxiv_dx11.exe to support 6.35.
-* Jun 28, 2023 - Cleanup docker logs and update ffxiv_dx11.exe to 6.41.
-* Jul 21, 2023 - Update ffxiv_dx11.exe to 6.45.
+* Jun 28, 2023 - Cleanup docker logs.
 * Aug 3, 2023 - Add support for argument --extra-delay, --measure-ping, --nftables and set default --measure-ping to false (prior versions default to true).
-* Aug 11, 2023 - Update ffxiv_dx11.exe to 6.48.
-* Nov 11, 2023 - Update ffxiv_dx11.exe to 6.51 and improve custom opcodes handling.
-* Feb 2, 2024 - Update ffxiv_dx11.exe to 6.55
+* Nov 11, 2023 - Improve custom opcodes handling.
+* Jul 26, 2024 - Remove some misleading information on changelog. From now on, the ffxiv_dx11.exe file will be updated only when needed. The current 6.55 exe is still working fine with Dawntrail 7.01 and will continue to work until there is a breaking change from SQEN in the future.
 
 -----
 
