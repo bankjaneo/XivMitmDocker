@@ -23,7 +23,7 @@ This is a Docker container version of XivMitmLatencyMitigator. It aims for easy 
 
 ### Requirements
 
-A Linux with IPv4 forwarding enabled and Docker Engine installed.
+A Linux with IPv4 forwarding enabled and Docker Engine installed. Wired connection only, wireless will not working.
 
 #### Enable IPv4 forwarding.
 
