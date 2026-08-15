@@ -1,3 +1,5 @@
+
+
 # XivMitmLatencyMitigator in a Docker container
 
 Please visit official [XivMitmLatencyMitigator](https://github.com/Soreepeong/XivMitmLatencyMitigator) for more information.
@@ -135,7 +137,7 @@ services:
       - LOCAL=true # Default to true. Set to false when not use within LAN (E.g. Connect through VPN only).
       - LEGACY=false # Default to false. Set to true if you want to use iptables-legacy.
       # - NFTABLES=false # Default to false. Set to true if you use nftables.
-      # - EXTRA_DELAY=0.035 # Default value is 0.075 ms.
+      # - EXTRA_DELAY=0.035 # Default value is 0.075 s.
       # - MEASURE_PING=false # Default to false. Set to true may help improve respond time on private VPN server.
       - VPN=false # Default to false. Set to true if you use this on private VPN server.
       - VPN_INTERFACE_1=wg0 # Find by using "ip a" command.
